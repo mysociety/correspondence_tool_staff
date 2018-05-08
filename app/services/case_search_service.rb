@@ -39,6 +39,7 @@ class CaseSearchService
     @query = find_or_initialize_query(@query_params,
                                       query_type: @query_type,
                                       user_id: current_user.id)
+
   end
 
   def call
@@ -95,7 +96,8 @@ class CaseSearchService
         query_params.merge(
           query_type: query_type,
           user_id: user_id,
-        )
+          num_results: 0
+        ),
       )
     end
     search_query
