@@ -85,4 +85,14 @@ class SearchQuery < ApplicationRecord
       filter_class.new(self, result).call
     end
   end
+
+  def filter_crumbs
+    filter_crumbs = []
+    FILTER_CLASSES.map do |filter_class|
+      filter_class.new(self, Case::Base.none)
+    end.each do |filter|
+      filter_crumbs << filter.crumbs
+    end
+    filter_crumbs
+  end
 end
