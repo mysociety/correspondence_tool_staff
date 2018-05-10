@@ -30,9 +30,9 @@ h1.bold-large Search queries
         - @queries.each do |q|
           tr
             td= q.created_at.to_date
-            td= q.user.full_name
+            td= "#{q.user_name}, #{q.user_roles}"
             td= q.query_type
-            td= q.query
+            td= "#{q.query_details}"
             td= q.num_results
             td= q.num_clicks
             td= q.highest_position
