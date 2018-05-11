@@ -17,10 +17,12 @@ class DashboardController < ApplicationController
   end
 
   def search_queries
-    @queries = SearchQuery.where(parent_id: nil).order(id: :desc).includes(:user).limit(100).decorate
+    @queries = SearchQuery.where(query_type: 'search').where(parent_id: nil).order(id: :desc).includes(:user).limit(100).decorate
   end
 
-
+  def list_queries
+    @queries = SearchQuery.where(query_type: 'list').where(parent_id: nil).order(id: :desc).includes(:user).limit(100).decorate
+  end
 
   private
 

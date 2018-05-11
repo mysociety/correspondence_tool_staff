@@ -10,7 +10,6 @@ class SearchQueryDecorator < Draper::Decorator
   end
 
   def query_details
-    # TODO delete filters that aren't used
-    object.query.to_a.each {|a| a.join " "}.join " "
+    object.query.reject{ |name, values| values.blank?}
   end
 end

@@ -1,4 +1,4 @@
-h1.bold-large Search queries
+h1.bold-large List queries
 
 .grid-row
   .column-full.table-container.container
@@ -17,8 +17,6 @@ h1.bold-large Search queries
           th scope='col'
             | User
           th scope='col'
-            | Role
-          th scope='col'
             | Search/Filter
           th scope='col'
             | Search Term
@@ -32,8 +30,7 @@ h1.bold-large Search queries
         - @queries.each do |q|
           tr
             td= q.created_at.to_date
-            td= q.user_name
-            td= q.user_roles
+            td= "#{q.user_name}, #{q.user_roles}"
             td= q.query_type
             td= q.query_details
             td= q.num_results
@@ -44,8 +41,7 @@ h1.bold-large Search queries
             tr
               td= ''
               td= ''
-              td= ''
-              td= d.query_type
+              td= "#{d.query_type}"
               td= d.query_details
               td= d.num_results
               td= d.num_clicks
