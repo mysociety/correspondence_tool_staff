@@ -16,6 +16,6 @@ describe SearchQueryDecorator, type: :model do
   end
 
   it 'should display the query details' do
-    expect(subject.query_details).to eq 'search text: Winne the Pooh'
+    expect(subject.query_details).to eq 'Search text: Winnie the Pooh'
   end
 end
