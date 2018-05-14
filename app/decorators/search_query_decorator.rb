@@ -10,6 +10,7 @@ class SearchQueryDecorator < Draper::Decorator
   end
 
   def query_details
-    object.query.reject{ |name, values| values.blank?}
+    x = object.query.reject{ |name, values| values.blank? }
+    x.each { |k, v| "#{k}: #{v}, "}
   end
 end

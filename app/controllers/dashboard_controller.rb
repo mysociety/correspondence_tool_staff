@@ -1,5 +1,7 @@
 class DashboardController < ApplicationController
 
+  attr_reader :queries
+
   def cases
     @dates = { }
     5.times do |n|

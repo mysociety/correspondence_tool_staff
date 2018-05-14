@@ -16,7 +16,8 @@ describe DashboardController do
     end
 
     it 'has search queries' do
-      expect(@queries).to eq [search_query]
+      expect(subject.queries).to eq [search_query]
+      # expect(subject.queries).not_to include list_query
     end
   end
 
@@ -26,7 +27,10 @@ describe DashboardController do
       get :list_queries
       expect(request.path).to eq('/dashboard/list_queries')
     end
-    it 'has list queries' do
+
+    # can be uncommented once list queries are introduced
+    xit 'has list queries' do
+      expect(subject.queries).to eq [list_query]
     end
   end
 end
