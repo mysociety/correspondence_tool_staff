@@ -32,7 +32,7 @@ h1.bold-large List queries
         - @queries.each do |q|
           tr
             td= q.created_at.to_date
-            td= q.user_name
+            td= q.user.full_name
             td= q.user_roles
             td= q.query_type
             td= q.list_query_details

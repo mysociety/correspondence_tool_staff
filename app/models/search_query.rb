@@ -128,6 +128,7 @@ class SearchQuery < ApplicationRecord
   def params_without_filters
     query.except(*(self.class.filter_attributes.map(&:to_s)))
   end
+
   private
 
   def search_results

@@ -11,17 +11,17 @@ class SearchQueryDecorator < Draper::Decorator
 
   def search_query_details
     x = object.query.reject{ |name, values| values.blank? || name == 'common_exemption_ids' }
-    x.map { |key, value| "#{key.humanize}: #{make_value(key, value)}" }.join(", ")
+    x.map { |key, value| "#{key.humanize}: #{make_value(key, value)}" }.join(", \n")
   end
 
   def list_query_details
-    object.query['list_path']
+    object.query['list_path'].split('/').join(' ').humanize
   end
 
   def filtered_list_query_details
     x = object.query.reject{ |name, values| values.blank? || name == 'list_path'||
     name == 'list_params' }
-    x.map { |key, value| "#{key.humanize}: #{value.join(", " ).humanize }" }.join(", ")
+    x.map { |key, value| "#{key.humanize}: #{value.join(", " ).humanize }" }.join(", \n")
   end
 
   private

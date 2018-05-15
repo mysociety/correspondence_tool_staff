@@ -92,7 +92,6 @@ class CasesController < ApplicationController
   end
 
   def open_cases
-
     if params[:search_query]
       @cases = search_and_filter
     else

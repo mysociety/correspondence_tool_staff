@@ -23,7 +23,8 @@ class DashboardController < ApplicationController
   end
 
   def list_queries
-    @queries = SearchQuery.where(query_type: 'list').where(parent_id: nil).order(id: :desc).includes(:user).limit(100).decorate
+    parent_ids = SearchQuery.where.not(parent_id: nil).pluck(:parent_id).uniq
+    @queries = SearchQuery.where(query_type: 'list').where(id: parent_ids).order(id: :desc).includes(:user).limit(100).decorate
   end
 
   private
