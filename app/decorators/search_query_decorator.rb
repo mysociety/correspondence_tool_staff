@@ -9,19 +9,28 @@ class SearchQueryDecorator < Draper::Decorator
     object.user.full_name
   end
 
-  def query_details
-    if object.query_type == 'filter'
-      list
-    else
-      x = object.query.reject{ |name, values| values.blank? }
-      x.map { |key, value| "#{key.humanize}: #{value}" }.join(", ")
-    end
+  def search_query_details
+    x = object.query.reject{ |name, values| values.blank? || name == 'common_exemption_ids' }
+    x.map { |key, value| "#{key.humanize}: #{make_value(key, value)}" }.join(", ")
   end
 
-  def list
-    object.query
-    x = object.query.reject{ |name, values| values.blank? || name == 'list_path' ||
+  def list_query_details
+    object.query['list_path']
+  end
+
+  def filtered_list_query_details
+    x = object.query.reject{ |name, values| values.blank? || name == 'list_path'||
     name == 'list_params' }
-    x.map { |key, value| "#{key.humanize}: #{value.join(', ').humanize}" }.join(", ")
+    x.map { |key, value| "#{key.humanize}: #{value.join(", " ).humanize }" }.join(", ")
+  end
+
+  private
+
+  def make_value(key, value)
+    if key == 'filter_assigned_to_ids'
+      value.map {|v| "#{Team.find(v).name}" }.join ' '
+    else
+      value
+    end
   end
 end
