@@ -169,7 +169,7 @@ class Case::Base < ApplicationRecord
           source: :user
 
   has_one :responder_assignment,
-          -> { last_responding },
+          -> { responding.accepted.limit(1) },
           class_name: 'Assignment',
           foreign_key: :case_id
 

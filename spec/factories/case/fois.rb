@@ -112,8 +112,8 @@ FactoryBot.define do
     end
 
     after(:create) do |kase, evaluator|
+      kase.assignments.responding.pending.first.accepted!
       kase.responder_assignment.update_attribute :user, evaluator.responder
-      kase.responder_assignment.accepted!
       create :case_transition_accept_responder_assignment,
              case: kase,
              acting_user_id: kase.responder.id,

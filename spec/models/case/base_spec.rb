@@ -676,8 +676,23 @@ RSpec.describe Case::Base, type: :model do
                   .through(:managing_assignment)
                   .source(:team) }
 
-    it { should have_one(:responder_assignment)
-                  .class_name('Assignment') }
+    describe 'responder_assignment' do
+      it { should have_one(:responder_assignment)
+                    .class_name('Assignment') }
+
+      it 'should retrieve the last accepted responder assignment' do
+        first_responding_team = create :responding_team
+        second_responding_team = create :responding_team
+        kase = create :closed_case, responding_team: first_responding_team
+        kase.assignments << Assignment.new(
+          state: :pending,
+          role: :responding,
+          team: second_responding_team
+        )
+        expect(kase.responder_assignment.team).to eq first_responding_team
+      end
+    end
+
     it { should have_one(:responder)
                   .through(:responder_assignment)
                   .source(:user) }

@@ -50,10 +50,6 @@ class Assignment < ApplicationRecord
 
   scope :pending_accepted, -> { where(state: %w[pending accepted]) }
 
-  scope :last_responding, -> {
-    responding.where.not(state: 'rejected').order(id: :desc).limit(1)
-  }
-
   attr_accessor :reasons_for_rejection
 
   before_save :mark_case_as_dirty_for_responding_assignments
