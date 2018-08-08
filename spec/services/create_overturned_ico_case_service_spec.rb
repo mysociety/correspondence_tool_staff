@@ -91,6 +91,19 @@ describe CreateOverturnedICOCaseService do
         end
       end
 
+      it 'links other cases linked to the original case' do
+        linked_case_1 = create :sar_case
+        linked_case_2 = create :sar_case
+        bmt = find_or_create :team_disclosure_bmt
+        manager = bmt.users.first
+        CaseLinkingService.new(manager, original_case, linked_case_1.number).create
+        CaseLinkingService.new(manager, original_case, linked_case_2.number).create
+        expect(original_case.linked_cases).to match_array [ linked_case_1, linked_case_2 ]
+
+        my_service = described_class.new(original_ico_appeal.id)
+        my_service.call
+        expect(my_service.overturned_ico_case.related_cases).to match_array [ linked_case_1, linked_case_2 ]
+      end
     end
 
     context 'original case type is Case::ICO::FOI' do
