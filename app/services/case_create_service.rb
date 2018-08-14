@@ -47,6 +47,11 @@ class CaseCreateService
 
   def create_case
     @case = @case_class.new(@permitted_params.merge(uploading_user: @user))
+    if @case.overturned_ico?
+      @case.original_case.related_cases.each do |related_case|
+        add_related_case(@case, related_case)
+      end
+    end
 
     if @case.invalid?
       @result = :error
@@ -107,5 +112,14 @@ class CaseCreateService
     else
       case_class_service.case_class
     end
+  end
+
+  def add_related_case(kase, related_kase)
+    kase_link = LinkedCase.new(
+        linked_case_number: related_kase.to_s&.strip
+    )
+
+    #Create the links
+    kase.related_case_links << kase_link
   end
 end

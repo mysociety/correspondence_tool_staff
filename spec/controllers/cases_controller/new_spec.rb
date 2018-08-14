@@ -123,7 +123,7 @@ describe CasesController, type: :controller do
         end
       end
 
-      context 'original appeal is Case::ICO::FOI' do
+      xcontext 'original appeal is Case::ICO::FOI' do
         it 'authorizes' do
           expect { get :new_overturned_ico, params: {id: ico_foi.id} }
               .to require_permission(:new_overturned_ico?)
