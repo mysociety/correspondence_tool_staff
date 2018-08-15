@@ -192,6 +192,8 @@ describe CaseCreateService do
         expect(kase.external_deadline).to eq deadline
         expect(kase.reply_method).to eq 'send_by_email'
         expect(kase.email).to eq 'stephen@stephenrichards.eu'
+        expect(kase.linked_cases).to match_array [original_case, original_ico_appeal]
+        expect(kase.related_cases).to match_array [original_case, original_ico_appeal]
       end
 
       it 'sets the workflow to standard' do
@@ -241,6 +243,4 @@ describe CaseCreateService do
       expect(ccs.call).to eq false
     end
   end
-
-
 end

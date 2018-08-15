@@ -1407,7 +1407,7 @@ RSpec.describe CasesController, type: :controller do
 
       context 'valid params' do
         before do
-          service = double(CreateOverturnedICOCaseService,
+          service = double(NewOverturnedICOCaseService,
                            call: nil,
                            error?: false,
                            success?: true,
@@ -1415,7 +1415,7 @@ RSpec.describe CasesController, type: :controller do
                            original_case: sar,
                            overturned_ico_case: double_overturned_ico_case)
           params = ActionController::Parameters.new({ id: ico_sar.id })
-          expect(CreateOverturnedICOCaseService).to receive(:new).with(ico_sar.id.to_s).and_return(service)
+          expect(NewOverturnedICOCaseService).to receive(:new).with(ico_sar.id.to_s).and_return(service)
           get :new_overturned_ico, params: params.to_unsafe_hash
         end
 
@@ -1434,7 +1434,7 @@ RSpec.describe CasesController, type: :controller do
 
       context 'invalid params' do
         before do
-          service = double(CreateOverturnedICOCaseService,
+          service = double(NewOverturnedICOCaseService,
                            call: nil,
                            error?: true,
                            success?: false,
@@ -1442,7 +1442,7 @@ RSpec.describe CasesController, type: :controller do
                            original_case: sar,
                            overturned_ico_case: double_overturned_ico_case)
           params = ActionController::Parameters.new({ id: ico_sar.id })
-          expect(CreateOverturnedICOCaseService).to receive(:new).with(ico_sar.id.to_s).and_return(service)
+          expect(NewOverturnedICOCaseService).to receive(:new).with(ico_sar.id.to_s).and_return(service)
           get :new_overturned_ico, params: params.to_unsafe_hash
         end
 
