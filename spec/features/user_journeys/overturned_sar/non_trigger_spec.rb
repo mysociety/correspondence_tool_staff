@@ -16,6 +16,10 @@ feature 'SAR overturned case' do
                                             responding_team: responding_team,
                                             ico_case: original_appeal_case
 
+    accept_case kase: kase,
+                user: responder,
+                do_logout: false
+
     add_message_to_case kase: kase,
                         message: 'This. Is. A. Test.',
                         do_logout: true
