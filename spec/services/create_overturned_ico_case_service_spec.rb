@@ -42,10 +42,11 @@ describe CreateOverturnedICOCaseService do
 
       before(:each) do
         service.call
+        @ovt = service.overturned_ico_case
       end
 
       it 'sets the new overturned case to be a Case::OverturnedICO::SAR' do
-        expect(service.overturned_ico_case).to be_instance_of(Case::OverturnedICO::SAR)
+        expect(@ovt).to be_instance_of(Case::OverturnedICO::SAR)
       end
 
       it 'is success' do
@@ -53,19 +54,25 @@ describe CreateOverturnedICOCaseService do
       end
 
       it 'sets the original_ico_appeal' do
-        expect(service.overturned_ico_case.original_ico_appeal).to eq original_ico_appeal
+        expect(@ovt.original_ico_appeal).to eq original_ico_appeal
       end
 
       it 'sets the original case' do
-        expect(service.overturned_ico_case.original_case).to eq original_case
+        expect(@ovt.original_case).to eq original_case
       end
 
+      # it 'links this new case to the original appeal' do
+      #   expect(@ovt.original_case.linked_cases).to include(@ovt)
+      # end
+      #
+      # it 'links this new case to the original case'
+
       it 'the subject is delegated to the original case' do
-        expect(service.overturned_ico_case.subject).to eq original_case.subject
+        expect(@ovt.subject).to eq original_case.subject
       end
 
       it 'copies the ico officer name from the original appeal' do
-        expect(service.overturned_ico_case.ico_officer_name).to eq original_ico_appeal.ico_officer_name
+        expect(@ovt.ico_officer_name).to eq original_ico_appeal.ico_officer_name
       end
 
       context 'reply method' do
