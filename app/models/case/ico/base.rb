@@ -30,7 +30,9 @@ class Case::ICO::Base < Case::Base
                     :message,
                     :properties,
                     :received_date,
-                    :date_closed
+                    :date_closed,
+                    :ico_decision,
+                    :date_ico_decision_received
                   ]
 
   enum ico_decision: {
