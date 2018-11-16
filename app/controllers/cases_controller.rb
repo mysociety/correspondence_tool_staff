@@ -424,12 +424,20 @@ class CasesController < ApplicationController
     end
   end
 
+
   def search
+    sex = Time.now.to_f
+    puts ">>>>>>>>>>>>>> ZZZ #{sex} #{__FILE__}:#{__LINE__} <<<<<<<<<<"
+    puts ">>>>>>>>>>>>>> ZZZ #{Time.now.to_f} #{__FILE__}:#{__LINE__} <<<<<<<<<<"
+    puts ">>>>>>>>>>>>>> ZZZ #{Time.now.to_f - sex} #{__FILE__}:#{__LINE__} <<<<<<<<<<"
     service = CaseSearchService.new(user: current_user,
                                     query_type: :search,
                                     query_params: filter_params)
+    puts ">>>>>>>>>>>>>> ZZZ #{Time.now.to_f - sex} #{__FILE__}:#{__LINE__} <<<<<<<<<<"
     service.call
+    puts ">>>>>>>>>>>>>> ZZZ #{Time.now.to_f - sex} #{__FILE__}:#{__LINE__} <<<<<<<<<<"
     @query = service.query
+    puts ">>>>>>>>>>>>>> ZZZ #{Time.now.to_f - sex} #{__FILE__}:#{__LINE__} <<<<<<<<<<"
     if service.error?
       flash.now[:alert] = service.error_message
     else
@@ -437,17 +445,23 @@ class CasesController < ApplicationController
       @parent_id = @query.id
       flash[:query_id] = @query.id
     end
+    puts ">>>>>>>>>>>>>> ZZZ #{Time.now.to_f - sex} #{__FILE__}:#{__LINE__} <<<<<<<<<<"
     unpaginated_cases = service.result_set
+    puts ">>>>>>>>>>>>>> ZZZ#{Time.now.to_f - sex} #{__FILE__}:#{__LINE__} <<<<<<<<<<"
     if download_csv_request?
       @cases = unpaginated_cases
     else
+      puts ">>>>>>>>>>>>>> ZZZ #{Time.now.to_f - sex} #{__FILE__}:#{__LINE__} <<<<<<<<<<"
       @cases = unpaginated_cases.page(@page).decorate
+      puts ">>>>>>>>>>>>>> ZZZ #{Time.now.to_f - sex} #{__FILE__}:#{__LINE__} <<<<<<<<<<"
     end
     @filter_crumbs = @query.filter_crumbs
     respond_to do |format|
       format.html     { render :search }
       format.csv do
+        puts ">>>>>>>>>>>>>> ZZZ #{Time.now.to_f - sex} #{__FILE__}:#{__LINE__} <<<<<<<<<<"
         send_data CSVGenerator.new(@cases).to_csv, CSVGenerator.options('search')
+        puts ">>>>>>>>>>>>>> ZZZ #{Time.now.to_f - sex} #{__FILE__}:#{__LINE__} <<<<<<<<<<"
       end
     end
   end
