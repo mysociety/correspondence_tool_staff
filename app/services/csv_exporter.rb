@@ -17,7 +17,7 @@ class CSVExporter
       'Name',
       'Requester type',
       'Message',
-      'Info_held',
+      'Info held',
       'Outcome',
       'Refusal reason',
       'Exemptions',
