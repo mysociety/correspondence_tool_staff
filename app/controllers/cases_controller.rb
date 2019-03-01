@@ -276,9 +276,11 @@ class CasesController < ApplicationController
 
   def destroy
     authorize @case
-    service = CaseDeletionService.new(current_user, @case)
-    service.call
-    if service.result == :ok
+
+    service = CaseDeletionService.new(current_user,
+                                      @case,
+                                      params.require(:case).permit(:reason_for_deletion))
+    if service.call == :ok
       flash[:notice] = "You have deleted case #{@case.number}."
       redirect_to cases_path
     else
@@ -549,8 +551,6 @@ class CasesController < ApplicationController
     end
   end
 
-
-
   def update_closure
     authorize @case
     close_params = process_closure_params(@case.type_abbreviation)
@@ -606,7 +606,6 @@ class CasesController < ApplicationController
       render '/cases/ico/late_team'
     end
   end
-
 
   def search
     service = CaseSearchService.new(user: current_user,
