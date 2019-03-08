@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'users/show.html.slim', type: :view do
   let(:responder) { find_or_create :foi_responder }
-  let(:kase_1)    { create :accepted_case }
+  let(:kase_1)    { Timecop.freeze(1.day.ago) { create :accepted_case } }
   let(:kase_2)    { create :closed_case }
   let(:kases)     {
     Case::Base.where(id: [kase_1.id, kase_2.id]).order(created_at: :asc).page(1).decorate
